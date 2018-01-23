@@ -65,6 +65,7 @@ class ci_personas extends aprender_ci
 	function evt__cuadro__seleccion($seleccion)
 	{
     $this->cn()->cargar($seleccion, true, null, null, ['dt_telefonos']);
+		$this->s__datos['id_edicion'] = $seleccion;
     $this->set_pantalla('pant_edicion');
 	}
 
@@ -209,6 +210,19 @@ class ci_personas extends aprender_ci
 		$this->s__datos_filtro = $datos;
 	}
 
+	function ajax__get_esDniExistente($params, toba_ajax_respuesta $respuesta)
+	{
+		$datos['dni_ingresado'] = $params['dni_ingresado']; //< Devolvemos la pregunta
+		if (isset($this->s__datos['id_edicion'])) { //< Cuando se inicia una edicion se setea esta variable
+			$datos['existe'] = dao_personas::esDniExistente(
+														$params['dni_ingresado'],
+														$this->s__datos['id_edicion']['id_persona']
+													);
+		} else { //< La variable no esta seteada, no es edición, es un registro nuevo
+			$datos['existe'] = dao_personas::esDniExistente($params['dni_ingresado']);
+		}
+		$respuesta->set($datos);
+	}
 
 	function ajax__get_confTiposTelefonos($id, toba_ajax_respuesta $respuesta)
 	{
