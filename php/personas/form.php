@@ -61,7 +61,6 @@ class form extends aprender_ei_formulario
 		{
 			id_ef = 'nro_documento';
 			ef_estado = this.ef(id_ef).get_estado();
-			msg_error = 'El dni ' + ef_estado + ' ya se encuentra registrado para otra persona.';
 			// Si la respuesta es para el estado actual del ef procedemos
 			if (datos['dni_ingresado'] == ef_estado) {
 				// Guardamos la información en this
