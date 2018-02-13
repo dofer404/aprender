@@ -349,6 +349,26 @@ class cn_generico extends toba_cn
 		return $datos;
 	}
 
+	static function get_blob_from_resource($resource, $nombre_archivo=null, $extension_archivo=null)
+	{
+		if (isset($resource)) {
+			$temp_nombre = md5(uniqid(time())).($nombre_archivo ? $nombre_archivo : '').($extension_archivo ? $extension_archivo : '');
+			$s__temp_archivo = toba::proyecto()->get_www_temp($temp_nombre);
+			$html_imagen = "<img width=\"24px\" src='{$s__temp_archivo['url']}' alt='' />";
+			$temp_imagen = fopen($s__temp_archivo['path'], 'w');
+			stream_copy_to_stream($resource, $temp_imagen);
+			fclose($temp_imagen);
+			// fclose($resource); //< Para evitar errores en la recarga de formularios
+			$tamano = round(filesize($s__temp_archivo['path']) / 1024);
+			$fila[$nombre_campo] = '<a href="'.$s__temp_archivo['url'].'" target="_newtab">'.$html_imagen.' Tamaño archivo actual: '.$tamano.' kb</a>';
+			$fila[$nombre_campo.'?html'] = $html_imagen;
+			$fila[$nombre_campo.'?url'] = $s__temp_archivo['url'];
+		} else {
+			$fila[$nombre_campo] = null;
+		}
+		return $fila;
+	}
+
 	/**
 	* Determina si existe cursor para el datos tabla cuyo nombre es $nombre_dt,
 	*  dentro del datos relacion cuyo nombre es $nombre_dr.

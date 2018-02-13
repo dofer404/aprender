@@ -48,6 +48,8 @@ class ci_personas extends aprender_ci
 	 */
 	function conf__cuadro(aprender_ei_cuadro $cuadro)
 	{
+		$dci = dao_personas::get_datosConImagenes();
+		ei_arbol(['los datos' => $dci]);
 		if (isset($this->s__datos_filtro)) {
 			$filtro = $this->dep('filtro');
 			$filtro->set_datos($this->s__datos_filtro);

@@ -1,7 +1,19 @@
 <?php
 require_once 'tipos_de_documentos_manual/dao_tiposdedocumentosmanual.php';
+require_once 'cn_generico.php';
 class dao_personas
 {
+  static function get_datosConImagenes()
+  {
+    $sql = "SELECT * FROM eaprender.telefonos tels";
+    $resultado = consultar_fuente($sql);
+    foreach ($resultado as $key => $value) {
+      $resultado[$key]['imagen_proc'] = cn_generico::get_blob_from_resource($value['imagen']);
+    }
+
+    return $resultado;
+  }
+
   static function get_personas($where='')
   {
     if ($where) {
