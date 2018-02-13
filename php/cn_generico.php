@@ -352,7 +352,7 @@ class cn_generico extends toba_cn
 	static function get_blob_from_resource($resource, $nombre_archivo=null, $extension_archivo=null)
 	{
 		if (isset($resource)) {
-			$temp_nombre = md5(uniqid(time())).($nombre_archivo ? $nombre_archivo : '').($extension_archivo ? $extension_archivo : '');
+			$temp_nombre = md5(uniqid(time())).($nombre_archivo ? $nombre_archivo : '').($extension_archivo ? ('.'.$extension_archivo) : '');
 			$s__temp_archivo = toba::proyecto()->get_www_temp($temp_nombre);
 			$html_imagen = "<img width=\"24px\" src='{$s__temp_archivo['url']}' alt='' />";
 			$temp_imagen = fopen($s__temp_archivo['path'], 'w');
@@ -360,7 +360,7 @@ class cn_generico extends toba_cn
 			fclose($temp_imagen);
 			// fclose($resource); //< Para evitar errores en la recarga de formularios
 			$tamano = round(filesize($s__temp_archivo['path']) / 1024);
-			$fila[$nombre_campo] = '<a href="'.$s__temp_archivo['url'].'" target="_newtab">'.$html_imagen.' Tamaño archivo actual: '.$tamano.' kb</a>';
+			$fila['html'] = '<a href="'.$s__temp_archivo['url'].'" target="_newtab">'.$html_imagen.' Tamaño archivo actual: '.$tamano.' kb</a>';
 			$fila[$nombre_campo.'?html'] = $html_imagen;
 			$fila[$nombre_campo.'?url'] = $s__temp_archivo['url'];
 		} else {
