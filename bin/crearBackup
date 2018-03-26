@@ -14,6 +14,7 @@ usuario_postgres="postgres"
 clave_postgres="postgres"
 host_postgres="pg"
 puerto_postgres="5432"
+base_postgres="aprender"
 
 # Estos deben ser nombres aleatorios para que dos usuarios distintos no se pisen a la hora de hacer backups manuales. Además se debe tener en cuenta a la hora de borrar el bakcup del servidor.
 dir_tmp_data="temp_data"
@@ -39,7 +40,7 @@ if [ ! -d "$dir_backup/" ]; then
   mkdir "$dir_backup/"
 fi
 
-pg_dump -h $host_postgres -p $puerto_postgres -U "$usuario_postgres" -w desarrollo > "$arc_tmp_backup" && {
+pg_dump -h $host_postgres -p $puerto_postgres -U "$usuario_postgres" -w $base_postgres > "$arc_tmp_backup" && {
   if [ -f "$arc_tmp_backup" ]; then
     gzip "$arc_tmp_backup"
     if [ -f "$arc_tmp_backupgz" ]; then
