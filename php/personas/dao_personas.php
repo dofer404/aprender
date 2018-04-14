@@ -166,7 +166,6 @@ class dao_personas
     $dni_buscado = quote($dni_buscado); //< El dni que ingresó el usuario
     $id_excluido = quote($id_excluido); //< Si estamos en una edición, excluimos el id del registro que está siendo editado
 
-		$id = quote($id);
 		$sql = "SELECT COUNT(*) cantidad FROM eaprender.personas WHERE id_persona <> $id_excluido AND nro_documento=$dni_buscado";
 		$resultado = consultar_fuente($sql);
 
