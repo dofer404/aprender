@@ -51,6 +51,25 @@ class form_ml_telefonos extends aprender_ei_formulario_ml
 				}
 			}
 		}
+
+		{$this->objeto_js}.estaCargado = function(nombre_ef, nro_fila)
+		{
+			fila_idx = this.filas()[nro_fila];
+			tmp_ef = this.ef(nombre_ef);
+			return !((tmp_ef.ir_a_fila(fila_idx).get_estado() === '') || tmp_ef.ir_a_fila(fila_idx).es_oculto());
+		}
+
+		{$this->objeto_js}.evt__interno__validar = function(fila)
+		{
+			var todo_vacio = true;
+			for (i=0; i < this.filas().length; i++) {
+				todo_vacio = todo_vacio && !this.estaCargado('interno', i);
+			}
+			if (todo_vacio) {
+				this.ef('interno').ir_a_fila(fila).set_error('debe tener por lo menos un interno seteado');
+			}
+			return !todo_vacio;
+		}
 		";
 	}
 
